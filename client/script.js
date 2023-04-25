@@ -1,4 +1,5 @@
 const imagesInput = document.getElementById("images");
+const loader = document.getElementById("add-product");
 const selectedImagesList = document.getElementById("selected-images");
 const imagesTobase64 = [];
 const images = [];
@@ -31,7 +32,8 @@ addProductForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   try {
-    const endpoint = "http://localhost:3000/api/shopify/products";
+    loader.innerText = "loading ...";
+    const endpoint = "http://localhost:9000/api/shopify/products";
     const response = await fetch(endpoint, {
       method: "post",
       headers: {
@@ -54,12 +56,14 @@ addProductForm.addEventListener("submit", async (event) => {
     });
 
     if (response.ok) {
+      loader.innerText = "Add Product";
       error.innerText = "";
       success.style.display = "block";
       success.innerText = "Product added successfully!";
       event.target.reset();
       selectedImagesList.innerText = "";
     } else {
+      loader.innerText = "Add Product";
       success.innerText = "";
       error.style.display = "block";
       error.innerText = `Error: product was not added to shopify due to technical error - ${response.status}`;
