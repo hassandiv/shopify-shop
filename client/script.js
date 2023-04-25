@@ -33,7 +33,7 @@ addProductForm.addEventListener("submit", async (event) => {
 
   try {
     loader.innerText = "loading ...";
-    const endpoint = "http://localhost:9000/api/shopify/products";
+    const endpoint = `${window.location.origin}/api/shopify/products`;
     const response = await fetch(endpoint, {
       method: "post",
       headers: {
