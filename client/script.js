@@ -1,7 +1,6 @@
 const imagesInput = document.getElementById("images");
 const loader = document.getElementById("add-product");
 const selectedImagesList = document.getElementById("selected-images");
-const imagesTobase64 = [];
 const images = [];
 const addProductForm = document.querySelector("form");
 const error = document.getElementById("error");
@@ -12,15 +11,12 @@ imagesInput.addEventListener("change", (event) => {
     const listItem = document.createElement("li");
     listItem.textContent = file.name;
     selectedImagesList.appendChild(listItem);
-    imagesTobase64.push(file);
   }
 
-  const fileInput = document.querySelector('input[type="file"]');
-  const files = fileInput.files;
-
+  const { files } = imagesInput;
   for (let i = 0; i < files.length; i++) {
     const reader = new FileReader();
-    reader.onload = function (event) {
+    reader.onload = (event) => {
       const base64String = event.target.result.split(",")[1];
       images.push({ attachment: base64String });
     };
@@ -69,6 +65,6 @@ addProductForm.addEventListener("submit", async (event) => {
       error.innerText = `Error: product was not added to shopify due to technical error - ${response.status}`;
     }
   } catch (error) {
-    console.log(error.message);
+    throw new Error(error.message);
   }
 });

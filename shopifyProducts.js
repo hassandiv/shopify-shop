@@ -1,7 +1,9 @@
 const axios = require("axios");
 const { products } = require("./shopifyConstant");
 
-const addProduct = async (payload, token) => {
+const token = process.env.TOKEN;
+
+const addProduct = async (payload) => {
   try {
     const { data } = await axios({
       url: products(process.env.SHOP),
@@ -15,7 +17,7 @@ const addProduct = async (payload, token) => {
 
     return data;
   } catch (err) {
-    console.log("Error create product", err.message);
+    return `Error create product ${err.message}`;
   }
 };
 
